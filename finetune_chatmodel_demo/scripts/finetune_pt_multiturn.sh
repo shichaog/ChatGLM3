@@ -5,7 +5,7 @@ set -ex
 PRE_SEQ_LEN=128
 LR=2e-2
 NUM_GPUS=1
-MAX_SEQ_LEN=2048
+MAX_SEQ_LEN=4096
 DEV_BATCH_SIZE=1
 GRAD_ACCUMULARION_STEPS=16
 MAX_STEP=100
@@ -27,6 +27,7 @@ torchrun --standalone --nnodes=1 --nproc_per_node=$NUM_GPUS finetune.py \
     --preprocessing_num_workers 1 \
     --model_name_or_path $BASE_MODEL_PATH \
     --output_dir $OUTPUT_DIR \
+    --quantization_bit 8 \
     --per_device_train_batch_size $DEV_BATCH_SIZE \
     --gradient_accumulation_steps $GRAD_ACCUMULARION_STEPS \
     --max_steps $MAX_STEP \
